@@ -26,5 +26,3 @@ https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=4-89&node-t
 ## Ссылка на задеплоенный проект:
 
 https://messengerpraltikum.netlify.app/
-
-
