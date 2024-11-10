@@ -8,7 +8,7 @@
 
 1. **Авторизация** - форма входа в систему.
 2. **Регистрация** - форма регистрации нового пользователя.
-3. **Список чатов и лента переписки** - отображает чаты и переписку пользователя.
+3. **Список чатов и лента переписки** - отображает чаты и переписку пользователя. Будет реализован в следующих спринтах.
 4. **Настройки пользователя** - позволяет изменять информацию профиля, аватар и пароль.
 5. **Страница 404** - отображается в случае, если запрашиваемая страница не найдена.
 6. **Страница 500** - отображается в случае ошибки на сервере.
@@ -21,7 +21,17 @@
 
 ## Ссылка на макеты:
 
-https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=4-89&node-type=frame&t=2cOT1NFthEsdgpTx-0
+Страница регистрации - https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=4-89&node-type=frame&t=jrCtYdnN4QXJRbsd-0
+
+Страница аторизации - https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=2-16&node-type=symbol&t=jrCtYdnN4QXJRbsd-0
+
+Чат - https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=5-118&node-type=canvas&t=jrCtYdnN4QXJRbsd-0
+
+Личные данные - https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=5-687&node-type=canvas&t=jrCtYdnN4QXJRbsd-0
+
+500 - https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=6-852&node-type=frame&t=jrCtYdnN4QXJRbsd-0
+
+404 - https://www.figma.com/design/208njTuIH7rv9DUEfLIHjD/Untitled?node-id=6-870&node-type=frame&t=jrCtYdnN4QXJRbsd-0
 
 ## Ссылка на задеплоенный проект:
 
