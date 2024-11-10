@@ -1,0 +1,16 @@
+.button {
+  width: 100%;
+  padding: 14px 32px;
+  background-color: transparent;
+  color: white;
+  font-size: 14px;
+  border-radius: 8px;
+
+  &__primary {
+    background-color: #80B5A9;
+  }
+}
+
+.light-theme {
+  color: #142D4C;
+}

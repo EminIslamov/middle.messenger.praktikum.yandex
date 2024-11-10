@@ -1,0 +1,117 @@
+<div class="main_layout">
+    <div class="account">
+        <div class="account__avatar"></div>
+
+        <form>
+            <div class="account__data">
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите почту" color-theme="light-theme" name="email" }}
+                    </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Почта:</div>
+                        <div class="account__text">
+                            {{#if email}}
+                                {{email}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите логин" color-theme="light-theme" name="login" }}
+                    </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Логин:</div>
+                        <div class="account__text">
+                            {{#if login}}
+                                {{login}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите имя" color-theme="light-theme" name="first_name" }}
+                    </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Имя:</div>
+                        <div class="account__text">
+                            {{#if name}}
+                                {{name}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите фамилию" color-theme="light-theme" name="second_name" }}
+                    </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Фамилия:</div>
+                        <div class="account__text">
+                            {{#if surname}}
+                                {{surname}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите имя в чате" color-theme="light-theme" name="display_name" }}
+                    </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Имя в чате:</div>
+                        <div class="account__text">
+                            {{#if nickname}}
+                                {{nickname}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите номер телефона" color-theme="light-theme" name="phone" }}
+                    </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Телефон</div>
+                        <div class="account__text">
+                            {{#if phone}}
+                                {{phone}}
+                            {{/if}}
+                        </div>
+                    </div>
+                {{/if}}
+
+                <div class="account__row">
+                    <div class="account__title">Пароль:</div>
+                    <div class="account__text account__password">
+                        Изменить пароль
+                    </div>
+                </div>
+            </div>
+
+            <div class="account__buttons">
+
+                {{#if isEditing}}
+                    {{> Button label="Сохранить" type="primary" }}
+                {{else}}
+                    {{> Button label="Редактировать" type="primary" }}
+                {{/if}}
+
+                {{> Button label="Выйти" type="link" page="nav" color-theme="light-theme" }}
+            </div>
+        </form>
+    </div>
+</div>

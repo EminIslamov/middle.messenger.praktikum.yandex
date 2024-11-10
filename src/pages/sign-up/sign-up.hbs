@@ -1,0 +1,18 @@
+<div class="container">
+    <form class="login-form">
+        <div class="inputs-wrapper">
+            {{> Input label="Введите имя" }}
+            {{> Input label="Введите фамилию" }}
+            {{> Input label="Введите логин" }}
+            {{> Input label="Введите почту" }}
+            {{> Input label="Введите пароль" }}
+            {{> Input label="Введите номер телефона" }}
+        </div>
+
+        <div class="btns-wrapper">
+
+            {{> Button label="Зарегистрироваться" type="primary" }}
+            {{> Button label="Перейти к авторизации" type="link" page="login" }}
+        </div>
+    </form>
+</div>
