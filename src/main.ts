@@ -36,8 +36,6 @@ document.addEventListener('DOMContentLoaded', () => navigate('nav'));
 
 document.addEventListener('click', e => {
     //@ts-ignore
-    console.log(e.target.getAttribute('page'), 'e.target.getAttribute(\'page\')')
-    //@ts-ignore
     const page = e.target.getAttribute('page');
     if (page) {
         navigate(page);
