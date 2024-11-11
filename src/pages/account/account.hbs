@@ -1,6 +1,11 @@
 <div class="main_layout">
     <div class="account">
+
         <div class="account__avatar"></div>
+
+        {{#if isEditing}}
+                {{> Input name="avatar" html-type="file" }}
+        {{/if}}
 
         <form>
             <div class="account__data">
@@ -94,12 +99,20 @@
                     </div>
                 {{/if}}
 
-                <div class="account__row">
-                    <div class="account__title">Пароль:</div>
-                    <div class="account__text account__password">
-                        Изменить пароль
+                {{#if isEditing}}
+                    <div class="account__row--editing">
+                        {{> Input label="Введите текущий пароль" color-theme="light-theme" name="oldPassword" }}
+                    </div><div class="account__row--editing">
+                        {{> Input label="Введите новый пароль" color-theme="light-theme" name="newPassword" }}
                     </div>
-                </div>
+                {{else}}
+                    <div class="account__row">
+                        <div class="account__title">Пароль:</div>
+                        <div class="account__text account__password">
+                            Изменить пароль
+                        </div>
+                    </div>
+                {{/if}}
             </div>
 
             <div class="account__buttons">
