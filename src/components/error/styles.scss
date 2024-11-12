@@ -1,0 +1,22 @@
+.error_wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+}
+
+.error__code {
+  margin: 0;
+  font-size: 40px;
+}
+
+.error__message {
+  font-size: 20px;
+  margin: 20px 0;
+}
+
+.error_btn_wrapper {
+  width: max-content;
+}

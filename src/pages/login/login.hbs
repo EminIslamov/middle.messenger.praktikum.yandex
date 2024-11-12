@@ -1,0 +1,15 @@
+<div class="container">
+    <form class="login-form">
+        <div class="inputs-wrapper">
+            {{> Input label="Введите логин" name="login" }}
+
+            {{> Input label="Введите пароль" name="password" }}
+        </div>
+
+        <div class="btns-wrapper">
+        {{> Button label="Войти" type="primary" }}
+
+        {{> Button label="Перейти к регистрации" type="link" page="sign-up" }}
+        </div>
+    </form>
+</div>
