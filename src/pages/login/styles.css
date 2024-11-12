@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+}
+
+.login-form {
+  width: 508px;
+  background-color: #385170;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.inputs-wrapper {
+  display: grid;
+  width: 100%;
+  row-gap: 12px;
+}
+
+.btns-wrapper {
+  display: flex;
+  flex-direction: column;
+
+  width: 100%;
+  row-gap: 12px;
+  margin-top: 32px;
+}
