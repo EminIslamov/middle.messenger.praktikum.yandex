@@ -1,10 +1,10 @@
-import Block from "../../core/block";
+import Block from "../../../core/block";
 import Input from "./input";
 
 type InputFieldProps = {
     label?: string;
     onChange?: (e: Event) => void;
-    onBlur?: (e: FocusEvent) => void;
+    onBlur?: (e: Event) => void;
     name?: string;
     htmlType?: string;
     colorTheme?: string;

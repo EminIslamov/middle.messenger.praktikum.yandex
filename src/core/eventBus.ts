@@ -1,28 +1,31 @@
 export default class EventBus<E extends string> {
-    private listeners: Record<string, Function[]>;
+    private listeners: Record<E, Array<(...args: unknown[]) => void>>; // Уточнён тип для слушателей
+
     constructor() {
-        this.listeners = {};
+        this.listeners = {} as Record<E, Array<(...args: unknown[]) => void>>; // Инициализация с явным указанием типа
     }
-    on(event: E, callback: Function) {
+
+    on<T extends unknown[]>(event: E, callback: (...args: T) => void): void {
         if (!this.listeners[event]) {
             this.listeners[event] = [];
         }
-        this.listeners[event].push(callback);
+        this.listeners[event].push(callback as (...args: unknown[]) => void); // Приведение типа
     }
-    off(event: E, callback: Function) {
+
+    off<T extends unknown[]>(event: E, callback: (...args: T) => void): void {
         if (!this.listeners[event]) {
             throw new Error(`Нет события: ${event}`);
         }
         this.listeners[event] = this.listeners[event].filter(
-            (listener) => listener !== callback,
+            (listener) => listener !== (callback as (...args: unknown[]) => void), // Приведение типа
         );
     }
-    emit<T extends any[] = []>(event: E, ...args: T) {
+
+    emit<T extends unknown[]>(event: E, ...args: T): void {
         if (!this.listeners[event]) {
             return;
-            // throw new Error(`Нет события: ${event}`);
         }
-        this.listeners[event].forEach(function (listener) {
+        this.listeners[event].forEach((listener) => {
             listener(...args);
         });
     }

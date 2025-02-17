@@ -5,6 +5,11 @@ interface BlockConstructable<P = PropsBlock> {
     new (props: P): Block;
 }
 
+interface PropsBlock {
+    id: string;
+    [key: string]: unknown;
+}
+
 export default function registerComponent<Props extends PropsBlock>(
     Component: BlockConstructable<Props>,
 ) {
@@ -28,11 +33,11 @@ export default function registerComponent<Props extends PropsBlock>(
              * Костыль для того, чтобы передавать переменные
              * внутрь блоков вручную подменяя значение
              */
-            (Object.keys(hash) as any).forEach((key: keyof Props) => {
+            (Object.keys(hash) as string[]).forEach((key: string) => {
                 if (this[key] && typeof this[key] === "string") {
                     hash[key] = hash[key].replace(
-                        new RegExp(`{{${key}}}`, "i"),
-                        this[key],
+                        new RegExp(`{{${String(key)}}}`, "i"),
+                        this[key] as string
                     );
                 }
             });

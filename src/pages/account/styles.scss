@@ -22,6 +22,7 @@
   grid-template-columns: 100px minmax(100px, 1fr);
   gap: 16px;
   padding: 12px 0;
+  
   &:not(:last-of-type) {
     border-bottom: 1px solid #d0d0d0;
   }

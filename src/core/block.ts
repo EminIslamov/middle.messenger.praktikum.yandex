@@ -3,7 +3,16 @@ import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 
 // Abstract class that should not be instantiated directly
-abstract class Block<Props extends Record<string, any> = Record<string, any>> {
+export interface PropsBlock {
+    id?: string; // Уникальный идентификатор компонента
+    className?: string; // CSS классы
+    attrs?: Record<string, string>; // Атрибуты HTML
+    events?: Record<string, EventListener>; // События
+    formState?: Record<string, string>; // Состояние формы
+    [key: string]: unknown; // Добавьте индексную сигнатуру
+}
+
+abstract class Block<Props extends PropsBlock = PropsBlock> {
     static EVENTS = {
         INIT: "init",
         FLOW_CDM: "flow:component-did-mount",
@@ -14,14 +23,18 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
     private _element: HTMLElement | null = null;
     private _meta: { tagName: string; props: Props } | null = null;
     private _id: string = nanoid(6);
+    
 
     protected props: Props;
-    protected children: Record<string, Block<any> | Block<any>[]> = {};
+    protected children: Record<string, Block | Block[]> = {};
     private eventBus: () => EventBus<string>;
 
     constructor(tagName: string = "div", propsWithChildren: Props) {
         const eventBus = new EventBus<string>();
         this.eventBus = () => eventBus;
+
+        console.log('propsWithChildren', propsWithChildren);
+        
 
         const { props, children } = this._getChildrenAndProps(propsWithChildren);
         this.children = children;
@@ -31,7 +44,7 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
             props: props as Props,
         };
 
-        this.props = this._makePropsProxy(props);
+        this.props = this._makePropsProxy(props as Props);
 
         this._registerEvents(eventBus);
         eventBus.emit(Block.EVENTS.INIT);
@@ -70,15 +83,15 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
     }
 
     private _getChildrenAndProps(propsAndChildren: Props) {
-        const children: Record<string, Block<any> | Block<any>[]> = {};
+        const children: Record<string, Block | Block[]> = {};
         const props: Record<string, unknown> = {};
 
         Object.entries(propsAndChildren).forEach(([key, value]) => {
             if (Array.isArray(value)) {
-                children[key] = value.filter((v) => v instanceof Block) as Block<any>[];
+                children[key] = value.filter((v) => v instanceof Block) as Block[];
                 props[key] = value.filter((v) => !(v instanceof Block));
             } else if (value instanceof Block) {
-                children[key] = value as Block<any>;
+                children[key] = value as Block;
             } else {
                 props[key] = value;
             }
@@ -91,7 +104,9 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
         this.componentDidMount();
     }
 
-    protected componentDidMount(oldProps?: Props) {}
+    protected componentDidMount(_oldProps?: Props) { // eslint-disable-line @typescript-eslint/no-unused-vars
+        return true;
+    }
 
     dispatchComponentDidMount() {
         this.eventBus().emit(Block.EVENTS.FLOW_CDM);
@@ -105,7 +120,7 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
         this._render();
     }
 
-    protected componentDidUpdate(oldProps: Props, newProps: Props) {
+    protected componentDidUpdate(_oldProps: Props, _newProps: Props) { // eslint-disable-line @typescript-eslint/no-unused-vars
         return true;
     }
 
@@ -125,7 +140,9 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
         const events: Record<string, EventListener> = this.props.events || {};
 
         Object.keys(events).forEach((eventName) => {
-            this._element!.addEventListener(eventName, events[eventName]);
+            if (this._element) {
+                this._element.addEventListener(eventName, events[eventName]);
+            }
         });
     }
 
@@ -133,16 +150,18 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
         const events: Record<string, EventListener> = this.props.events || {};
 
         Object.keys(events).forEach((eventName) => {
-            this._element!.removeEventListener(eventName, events[eventName]);
+            if (this._element) {
+                this._element.removeEventListener(eventName, events[eventName]);
+            }
         });
     }
 
     private _compile(): DocumentFragment {
-        const propsAndStubs = { ...this.props };
+        const propsAndStubs: Record<string, unknown> = { ...this.props };
 
         Object.entries(this.children).forEach(([key, child]) => {
             if (Array.isArray(child)) {
-                propsAndStubs[key] = child.map(
+                (propsAndStubs as Record<string, unknown>)[key] = child.map(
                     (component) => `<div data-id="${component._id}"></div>`
                 );
             } else {
@@ -179,10 +198,12 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
         this._removeEvents();
         const block = this._compile();
 
-        if (this._element!.children.length === 0) {
-            this._element!.appendChild(block);
-        } else {
-            this._element!.replaceChildren(block);
+        if (this._element) {
+            if (this._element.children.length === 0) {
+                this._element.appendChild(block);
+            } else {
+                this._element.replaceChildren(block);
+            }
         }
 
         this._addEvents();
@@ -193,7 +214,10 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
     }
 
     getContent(): HTMLElement {
-        return this.element!;
+        if (!this.element) {
+            throw new Error("Element is not initialized");
+        }
+        return this.element;
     }
 
     private _makePropsProxy(props: Props): Props {
@@ -203,7 +227,7 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
         return new Proxy(props, {
             get(target: Props, prop: string) {
                 const value = target[prop as keyof Props];
-                return typeof value === "function" ? (value as Function).bind(target) : value;
+                return typeof value === "function" ? (value as (...args: unknown[]) => unknown).bind(target) : value;
             },
             set(target: Props, prop: string, value: unknown): boolean {
                 const oldTarget = { ...target };
@@ -228,6 +252,10 @@ abstract class Block<Props extends Record<string, any> = Record<string, any>> {
 
     hide() {
         this.getContent().style.display = "none";
+    }
+
+    get id() {
+        return this._id;
     }
 }
 

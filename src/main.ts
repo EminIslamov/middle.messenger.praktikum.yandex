@@ -6,17 +6,11 @@ import renderDOM from "./core/renderDom";
 
 const pages = {
     login: [Pages.LoginPage],
-    account: [Pages.AccountPage, {
-        email: 'leocherep@mail.ru',
-        login: 'turtle',
-        name: 'Леонардо',
-        surname: 'Черепахов',
-        nickname: 'Лео',
-        phone: '8-800-555-35-35',
-        isEditing: true,
-    }],
+    account: [Pages.AccountPage],
     nav: [Pages.NavigatePage],
     signUp: [Pages.SignUpPage],
+    chats: [Pages.ChatsPage],
+    error404: [Pages.Error404Page],
 };
 
 Object.entries(Components).forEach(([name, template]) => {
@@ -27,24 +21,29 @@ Object.entries(Components).forEach(([name, template]) => {
 });
 
 function navigate(page: string) {
-    //@ts-ignore
+    //Врмененная мера для текущей навигации
+    //@ts-expect-error
     const [source, context] = pages[page];
     if (typeof source === "function") {
         renderDOM(new source({}));
         return;
     }
 
-    const container = document.getElementById("app")!;
+    const container = document.getElementById("app");
 
-    const temlpatingFunction = Handlebars.compile(source);
-    container.innerHTML = temlpatingFunction(context);
+    if (container) {
+        const temlpatingFunction = Handlebars.compile(source);
+        container.innerHTML = temlpatingFunction(context);
+    } else {
+        console.error("Container element not found");
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => navigate("nav"));
 
 document.addEventListener("click", (e) => {
-    //@ts-ignore
-    const page = e.target.getAttribute("page");
+    const target = e.target as HTMLElement;
+    const page = target.getAttribute("page");
     if (page) {
         navigate(page);
 

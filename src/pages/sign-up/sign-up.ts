@@ -29,17 +29,17 @@ export default class SignUpPage extends Block{
                 label: "Введите почту",
                 name: "email",
 
-                onBlur: (e: FocusEvent) => {
-                    const error = validateEmail(this.props.formState.email)
-
-                    if (error) {
-                        this.children.InputEmail.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.email as string;
+                    if (value !== undefined) {
+                        const error = validateEmail(value);
+                        if (error) {
+                            (this.children.InputEmail as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputEmail.setProps({
+                    (this.children.InputEmail as Block).setProps({
                         error: "",
                     });
 
@@ -58,17 +58,17 @@ export default class SignUpPage extends Block{
             InputLogin: new Input({
                 label: "Введите логин",
                 name: "login",
-                onBlur: (e: FocusEvent) => {
-                    const error = validateLogin(this.props.formState.login)
-
-                    if (error) {
-                        this.children.InputLogin.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.login as string;
+                    if (value !== undefined) {
+                        const error = validateLogin(value);
+                        if (error) {
+                            (this.children.InputLogin as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputLogin.setProps({
+                    (this.children.InputLogin as Block).setProps({
                         error: "",
                     });
 
@@ -87,17 +87,17 @@ export default class SignUpPage extends Block{
             InputFirsName: new Input({
                 label: "Введите имя",
                 name: "first_name",
-                onBlur: (e: FocusEvent) => {
-                    const error = validateFirstName(this.props.formState.first_name)
-
-                    if (error) {
-                        this.children.InputFirsName.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.first_name as string;
+                    if (value !== undefined) {
+                        const error = validateFirstName(value);
+                        if (error) {
+                            (this.children.InputFirsName as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputFirsName.setProps({
+                    (this.children.InputFirsName as Block).setProps({
                         error: "",
                     });
 
@@ -116,20 +116,20 @@ export default class SignUpPage extends Block{
             InputSecondName: new Input({
                 label: "Введите фамилию",
                 name: "second_name",
-                onBlur: (e: FocusEvent) => {
-                    const error = validateSecondName(this.props.formState.second_name)
-
-                    if (error) {
-                        this.children.InputSecondName.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.second_name as string;
+                    if (value !== undefined) {
+                        const error = validateSecondName(value);
+                        if (error) {
+                            (this.children.InputSecondName as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
                     console.log("onChange triggered");
 
 
-                    this.children.InputSecondName.setProps({
+                    (this.children.InputSecondName as Block).setProps({
                         error: "",
                     });
 
@@ -149,17 +149,17 @@ export default class SignUpPage extends Block{
                 label: "Введите номер телефона",
                 name: "phone",
 
-                onBlur: (e: FocusEvent) => {
-                    const error = validatePhone(this.props.formState.phone)
-
-                    if (error) {
-                        this.children.InputPhone.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.phone as string;
+                    if (value !== undefined) {
+                        const error = validatePhone(value);
+                        if (error) {
+                            (this.children.InputPhone as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputPhone.setProps({
+                    (this.children.InputPhone as Block).setProps({
                         error: "",
                     });
 
@@ -178,17 +178,17 @@ export default class SignUpPage extends Block{
             InputPassword: new Input({
                 label: "Введите пароль",
                 name: "password",
-                onBlur: (e: FocusEvent) => {
-                    const error = validatePassword(this.props.formState.password)
-
-                    if (error) {
-                        this.children.InputPassword.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.password as string;
+                    if (value !== undefined) {
+                        const error = validatePassword(value);
+                        if (error) {
+                            (this.children.InputPassword as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputPassword.setProps({
+                    (this.children.InputPassword as Block).setProps({
                         error: "",
                     });
 
@@ -208,7 +208,8 @@ export default class SignUpPage extends Block{
                 label: "Зарегистрироваться",
                 type: "primary",
                 page: "signup",
-                onClick: (e: MouseEvent) => {
+                colorTheme: 'light-theme',
+                onClick: (e: Event) => {
                     e.preventDefault();
                     const validators = [
                         { field: 'email', validate: validateEmail, input: 'InputEmail' },
@@ -223,12 +224,15 @@ export default class SignUpPage extends Block{
 
                     // Пробегаем по всем полям и валидаторам
                     validators.forEach(({ field, validate, input }) => {
-                        const error = validate(this.props.formState[field]);
-                        if (error) {
-                            this.children[input].setProps({ error });
-                            isValid = false;
-                        } else {
-                            this.children[input].setProps({ error: "" });
+                        const value = this.props.formState?.[field] as string;
+                        if (value !== undefined) {
+                            const error = validate(value);
+                            if (error) {
+                                (this.children[input] as Block).setProps({ error });
+                                isValid = false;
+                            } else {
+                                (this.children[input] as Block).setProps({ error: "" });
+                            }
                         }
                     });
 
@@ -241,6 +245,7 @@ export default class SignUpPage extends Block{
                 label: "Перейти к авторизации",
                 type: "link",
                 page: "login",
+                colorTheme: 'dark-theme',
             }),
         });
     }

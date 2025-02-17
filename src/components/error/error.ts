@@ -1,5 +1,5 @@
 import Block from "../../core/block.ts";
-import {Button} from "../button";
+import {Button} from "../ui/button";
 
 type ErrorProps = {
     errorCode: string;
@@ -15,6 +15,8 @@ export class Error extends Block {
                 label: "Выйти",
                 type: "link",
                 colorTheme: 'light-theme',
+                // onClick: () => { /* your click handler logic */ },
+                // page: "login",
             }),
         });
     }

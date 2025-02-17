@@ -1,0 +1,100 @@
+.chats {
+    display: flex;
+
+    .chats__contacts {
+        width: 310px;
+        padding: 20px 10px 10px;
+        background-color: #FBFBFB;
+    }
+}
+
+.profile_link {
+    text-align: right;
+    font-size: 12px;
+    font-weight: 400;
+
+    a {
+        text-decoration: none;
+        color: #999;
+    }
+}
+
+.contacts__search {
+    margin-top: 22px;
+}
+
+.chats__contacts__list {
+    margin-top: 14px;
+    min-height: 100vh;
+}
+
+.chat_detail {
+    width: 100%;
+    display: grid; // Используем Grid
+    grid-template-rows: auto 1fr auto; // Заголовок, сообщения и инпут
+    height: 100%; // Убедитесь, что родительский элемент занимает всю высоту
+}
+
+.chat_detail__chose_chat {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 400;
+    color: #999;
+}
+
+.chat_detail__header {
+    grid-row: 1; // Устанавливаем заголовок в первую строку
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.contact_info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    &__avatar {
+        width: 34px;
+        height: 34px;
+        border-radius: 50%;
+        background-color: #EFEFEF;
+    }
+
+    &__name {
+        font-size: 13px;
+        font-weight: 600;
+    }
+}
+
+.chat_detail__messages_list {
+    max-height: 630px; // Установите максимальную высоту для списка сообщений
+    overflow-y: auto; // Добавлено для вертикальной прокрутки
+    padding: 20px;
+    grid-row: 2; // Устанавливаем этот элемент во вторую строку
+}
+
+.chat_detail__message_input {
+    width: calc(100% - 100px);
+    grid-row: 3; // Устанавливаем этот элемент в третью строку
+    display: grid;
+    display: flex;
+    gap: 10px;
+    margin-top: 42px;
+    padding-top: 12px;
+    border-top: 1px solid #EAEAEA;
+    margin-left: 20px;
+
+
+    input {
+        width: 100%;
+        padding: 10px 20px;
+    }
+}

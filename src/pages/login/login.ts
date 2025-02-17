@@ -1,12 +1,6 @@
 import { Button, Input } from "../../components";
 import Block from "../../core/block";
-import {
-    validateEmail,
-    validateFirstName,
-    validateLogin,
-    validatePassword, validatePhone,
-    validateSecondName
-} from "../../utils/validate.ts";
+import {validateLogin, validatePassword} from "../../utils/validate.ts";
 
 interface LoginPageProps {
     className?: string;
@@ -18,7 +12,6 @@ interface LoginPageProps {
         login: string;
         password: string;
     };
-    [key: string]: any; // Если у вас есть другие динамические свойства
 }
 
 export default class LoginPage extends Block {
@@ -37,86 +30,75 @@ export default class LoginPage extends Block {
             InputLogin: new Input({
                 label: "Введите логин",
                 name: "login",
-                onBlur: (e: FocusEvent) => {
-                    const error = validateLogin(this.props.formState.login)
-
-                    if (error) {
-                        this.children.InputLogin.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.login as string;
+                    if (value !== undefined) {
+                        const error = validateLogin(value);
+                        if (error) {
+                            (this.children.InputLogin as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputLogin.setProps({
-                        error: "",
-                    });
-
+                    (this.children.InputLogin as Block).setProps({ error: "" });
                     const target = e.target as HTMLInputElement;
                     const value = target.value;
-
                     this.setProps({
                         formState: {
-                            ...this.props.formState,
+                            ...(this.props.formState as { login: string, password: string }),
                             login: value,
                         },
                     });
                 },
             }),
-
             InputPassword: new Input({
                 label: "Введите Пароль",
                 name: "password",
-                onBlur: (e: FocusEvent) => {
-                    const error = validatePassword(this.props.formState.password)
-
-                    if (error) {
-                        this.children.InputPassword.setProps({
-                            error,
-                        });
+                onBlur: () => {
+                    const value = this.props.formState?.password as string;
+                    if (value !== undefined) {
+                        const error = validatePassword(value);
+                        if (error) {
+                            (this.children.InputPassword as Block).setProps({ error });
+                        }
                     }
                 },
                 onChange: (e: Event) => {
-                    this.children.InputPassword.setProps({
-                        error: "",
-                    });
-
+                    (this.children.InputPassword as Block).setProps({ error: "" });
                     const target = e.target as HTMLInputElement;
                     const value = target.value;
-
                     this.setProps({
                         formState: {
-                            ...this.props.formState,
+                            ...(this.props.formState as { login: string, password: string }),
                             password: value,
                         },
                     });
                 },
             }),
-
             SignInButton: new Button({
                 label: "Войти",
                 type: "primary",
                 page: "signup",
-                onClick: (e: MouseEvent) => {
+                colorTheme: 'light-theme',
+                onClick: (e: Event) => {
                     e.preventDefault();
-
                     const validators = [
                         { field: 'login', validate: validateLogin, input: 'InputLogin' },
                         { field: 'password', validate: validatePassword, input: 'InputPassword' },
                     ];
-
                     let isValid = true;
-
-                    // Пробегаем по всем полям и валидаторам
                     validators.forEach(({ field, validate, input }) => {
-                        const error = validate(this.props.formState[field]);
-                        if (error) {
-                            this.children[input].setProps({ error });
-                            isValid = false;
-                        } else {
-                            this.children[input].setProps({ error: "" });
+                        const value = this.props.formState?.[field] as string;
+                        if (value !== undefined) {
+                            const error = validate(value);
+                            if (error) {
+                                (this.children[input] as Block).setProps({ error });
+                                isValid = false;
+                            } else {
+                                (this.children[input] as Block).setProps({ error: "" });
+                            }
                         }
                     });
-
                     if (isValid) {
                         console.log(this.props.formState);
                     }
@@ -126,6 +108,7 @@ export default class LoginPage extends Block {
                 label: "Перейти к регистрации",
                 type: "link",
                 page: "signup",
+                colorTheme: 'dark-theme',
             }),
         });
     }

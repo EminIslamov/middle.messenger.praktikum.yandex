@@ -1,4 +1,4 @@
-import Block from "../../core/block";
+import Block from "../../../core/block";
 
 type InputProps = {
     className: string;
@@ -7,7 +7,7 @@ type InputProps = {
     name?: string;
     events?: {
         change?: (e: Event) => void;
-        blur?: (e: FocusEvent) => void;
+        blur?: (e: Event) => void;
     };
 };
 
@@ -16,8 +16,8 @@ export default class Input extends Block {
         super("input", {
             ...props,
             attrs: {
-                type: props.htmlType,
-                name: props.name,
+                type: props.htmlType || "text",
+                name: props.name || "",
             },
         });
     }
