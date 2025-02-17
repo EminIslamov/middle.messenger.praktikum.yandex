@@ -23,7 +23,7 @@ abstract class Block<Props extends PropsBlock = PropsBlock> {
     private _element: HTMLElement | null = null;
     private _meta: { tagName: string; props: Props } | null = null;
     private _id: string = nanoid(6);
-    
+
 
     protected props: Props;
     protected children: Record<string, Block | Block[]> = {};
@@ -34,7 +34,7 @@ abstract class Block<Props extends PropsBlock = PropsBlock> {
         this.eventBus = () => eventBus;
 
         console.log('propsWithChildren', propsWithChildren);
-        
+
 
         const { props, children } = this._getChildrenAndProps(propsWithChildren);
         this.children = children;
