@@ -1,15 +1,15 @@
 .error_wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
   align-items: center;
-  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   margin: 0;
+  width: 100%;
 }
 
 .error__code {
-  margin: 0;
   font-size: 40px;
+  margin: 0;
 }
 
 .error__message {

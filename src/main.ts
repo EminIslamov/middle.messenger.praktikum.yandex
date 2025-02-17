@@ -21,8 +21,7 @@ Object.entries(Components).forEach(([name, template]) => {
 });
 
 function navigate(page: string) {
-    //Врмененная мера для текущей навигации
-    //@ts-expect-error
+    //@ts-expect-error: Времененная мера для текущей навигации
     const [source, context] = pages[page];
     if (typeof source === "function") {
         renderDOM(new source({}));

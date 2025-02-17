@@ -1,10 +1,10 @@
 .button {
-  width: 100%;
-  padding: 14px 32px;
   background-color: transparent;
+  border-radius: 8px;
   color: white;
   font-size: 14px;
-  border-radius: 8px;
+  padding: 14px 32px;
+  width: 100%;
 
   &__primary {
     background-color: #80B5A9;
