@@ -2,50 +2,50 @@ import Block from "../../../core/block";
 import Handlebars from "handlebars";
 
 export default class ContactsList extends Block {
-    constructor() {
-        super("div", {
-            contacts: [
-                {
-                    id: "1",
-                    name: "Александр",
-                    lastMessage: "Привет",
-                    time: "12:00",
-                    unreadMessages: '10',
-                },
-                {
-                    id: "2",
-                    name: "Игорь",
-                    lastMessage: "Как дела?",
-                    time: "12:00",
-                    unreadMessages: '10',
-                },
-                {
-                    id: "3",
-                    name: "Павел",
-                    lastMessage: "Как дела?",
-                    time: "12:00",
-                    unreadMessages: '10',
-                },
-                {
-                    id: "4",
-                    name: "Александр",
-                    lastMessage: "Привет",
-                    time: "12:00",
-                    unreadMessages: '10',
-                },
-                {
-                    id: "5",
-                    name: "Александр",
-                    lastMessage: "Привет",
-                    time: "12:00",
-                    unreadMessages: '10',
-                },
-            ],
-        });
-    }
+  constructor() {
+    super("div", {
+      contacts: [
+        {
+          id: "1",
+          name: "Александр",
+          lastMessage: "Привет",
+          time: "12:00",
+          unreadMessages: "10",
+        },
+        {
+          id: "2",
+          name: "Игорь",
+          lastMessage: "Как дела?",
+          time: "12:00",
+          unreadMessages: "10",
+        },
+        {
+          id: "3",
+          name: "Павел",
+          lastMessage: "Как дела?",
+          time: "12:00",
+          unreadMessages: "10",
+        },
+        {
+          id: "4",
+          name: "Александр",
+          lastMessage: "Привет",
+          time: "12:00",
+          unreadMessages: "10",
+        },
+        {
+          id: "5",
+          name: "Александр",
+          lastMessage: "Привет",
+          time: "12:00",
+          unreadMessages: "10",
+        },
+      ],
+    });
+  }
 
-    public render(): string {
-        const template = `
+  public render(): string {
+    const template = `
             <div class="contacts_list">
                 {{#each contacts}}
                     <div class="contact_card">
@@ -67,7 +67,7 @@ export default class ContactsList extends Block {
             </div>
         `;
 
-        const compiledTemplate = Handlebars.compile(template);
-        return compiledTemplate({ contacts: this.props.contacts });
-    }
+    const compiledTemplate = Handlebars.compile(template);
+    return compiledTemplate({ contacts: this.props.contacts });
+  }
 }

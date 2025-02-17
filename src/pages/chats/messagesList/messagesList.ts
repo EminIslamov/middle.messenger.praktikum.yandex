@@ -2,71 +2,70 @@ import Handlebars from "handlebars";
 import Block from "../../../core/block";
 
 export default class MessagesList extends Block {
-    constructor() {
-        super("div", {
-            messages: [
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__outgoing",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__outgoing",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                {
-                    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
-                    time: "12:00",
-                    direction: "message_card__incoming",
-                },
-                
-            ],
-        });
-    }
-    
-    public render(): string {
-        const template = `
+  constructor() {
+    super("div", {
+      messages: [
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__outgoing",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__outgoing",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+        {
+          text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.",
+          time: "12:00",
+          direction: "message_card__incoming",
+        },
+      ],
+    });
+  }
+
+  public render(): string {
+    const template = `
             <div class="messages_list">
                 {{#each messages}}
                     <div class="message_card {{direction}}">
@@ -84,7 +83,7 @@ export default class MessagesList extends Block {
             </div>
         `;
 
-        const compiledTemplate = Handlebars.compile(template);
-        return compiledTemplate({ messages: this.props.messages });
-    }
+    const compiledTemplate = Handlebars.compile(template);
+    return compiledTemplate({ messages: this.props.messages });
+  }
 }

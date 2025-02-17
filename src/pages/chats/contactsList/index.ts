@@ -1,3 +1,3 @@
-import './styles.scss';
+import "./styles.scss";
 
-export { default as ContactsList } from './contactsList'; 
+export { default as ContactsList } from "./contactsList";

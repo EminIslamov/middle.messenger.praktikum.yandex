@@ -1,3 +1,3 @@
-import './styles.scss';
+import "./styles.scss";
 
-export { default as ContactCard } from './contactCard';
+export { default as ContactCard } from "./contactCard";

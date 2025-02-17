@@ -1,22 +1,22 @@
 .error_wrapper {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 0;
-  width: 100%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    width: 100%;
 }
 
 .error__code {
-  font-size: 40px;
-  margin: 0;
+    font-size: 40px;
+    margin: 0;
 }
 
 .error__message {
-  font-size: 20px;
-  margin: 20px 0;
+    font-size: 20px;
+    margin: 20px 0;
 }
 
 .error_btn_wrapper {
-  width: max-content;
+    width: max-content;
 }

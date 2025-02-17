@@ -1,28 +1,27 @@
 import Block from "../../core/block.ts";
-import {Button} from "../ui/button";
+import { Button } from "../ui/button";
 
 type ErrorProps = {
-    errorCode: string;
-    errorMessage: string;
-
+  errorCode: string;
+  errorMessage: string;
 };
 
 export class Error extends Block {
-    constructor(props: ErrorProps) {
-        super("div", {
-            errorCode: props.errorCode,
-            ExitButton: new Button({
-                label: "Выйти",
-                type: "link",
-                colorTheme: 'light-theme',
-                // onClick: () => { /* your click handler logic */ },
-                // page: "login",
-            }),
-        });
-    }
+  constructor(props: ErrorProps) {
+    super("div", {
+      errorCode: props.errorCode,
+      ExitButton: new Button({
+        label: "Выйти",
+        type: "link",
+        colorTheme: "light-theme",
+        // onClick: () => { /* your click handler logic */ },
+        // page: "login",
+      }),
+    });
+  }
 
-    public render(): string {
-        return `
+  public render(): string {
+    return `
         <div class="error_wrapper">
             <h1 class="error__code">
                 {{ errorCode }}
@@ -36,6 +35,6 @@ export class Error extends Block {
                 {{{ ExitButton }}}
             </div>
         </div>
-        `
-    }
+        `;
+  }
 }

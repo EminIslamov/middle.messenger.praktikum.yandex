@@ -1,20 +1,20 @@
 import Block from "../../../../core/block";
 
 interface ContactCardProps {
-    id: string;
-    name: string;
-    lastMessage: string;
-    time: string;
-    unreadMessages: number;
+  id: string;
+  name: string;
+  lastMessage: string;
+  time: string;
+  unreadMessages: number;
 }
 
 export default class ContactCard extends Block {
-    constructor(props: ContactCardProps) {
-        super("div", {props});
-    }
-    
-    public render(): string {
-        return `
+  constructor(props: ContactCardProps) {
+    super("div", { props });
+  }
+
+  public render(): string {
+    return `
             <div class="contact_card">
                 <div class="contact_card__avatar">
                     <img src=""  />
@@ -31,5 +31,5 @@ export default class ContactCard extends Block {
                 </div>
             </div>
         `;
-    }
+  }
 }

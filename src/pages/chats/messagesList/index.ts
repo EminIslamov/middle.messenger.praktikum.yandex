@@ -1,3 +1,3 @@
-import './styles.scss';
+import "./styles.scss";
 
-export {default as MessagesList } from './messagesList';
+export { default as MessagesList } from "./messagesList";

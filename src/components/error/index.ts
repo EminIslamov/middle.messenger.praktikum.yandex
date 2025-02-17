@@ -1,3 +1,3 @@
-import './styles.scss';
+import "./styles.scss";
 
-export { default as ErrorComponent } from './error.hbs?raw';
+export { default as ErrorComponent } from "./error.hbs?raw";

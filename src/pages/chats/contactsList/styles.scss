@@ -3,13 +3,13 @@
 }
 
 .contact_card {
-    border-bottom: 1px solid #EAEAEA;
-    border-top: 1px solid #EAEAEA;
+    border-bottom: 1px solid #eaeaea;
+    border-top: 1px solid #eaeaea;
     display: flex;
     padding: 12px 10px;
 
     &__avatar {
-        background-color: #EFEFEF;
+        background-color: #efefef;
         border-radius: 50%;
         height: 47px;
         margin-right: 10px;
@@ -40,16 +40,15 @@
 
         .contact_card___unread_messages {
             margin-top: 14px;
-        
         }
     }
 }
 
 .unread_messages_count {
     align-items: center;
-    background-color: #3369F3;
+    background-color: #3369f3;
     border-radius: 50%;
-    color: #FFF;
+    color: #fff;
     display: flex;
     font-size: 11px;
     height: 20px;

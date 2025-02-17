@@ -2,7 +2,7 @@
     display: flex;
 
     .chats__contacts {
-        background-color: #FBFBFB;
+        background-color: #fbfbfb;
         padding: 20px 10px 10px;
         width: 310px;
     }
@@ -49,7 +49,7 @@
 
 .chat_detail__header {
     align-items: center;
-    border-bottom: 1px solid #EAEAEA;
+    border-bottom: 1px solid #eaeaea;
     display: flex;
     grid-row: 1; // Устанавливаем заголовок в первую строку
     justify-content: space-between;
@@ -62,7 +62,7 @@
     gap: 10px;
 
     &__avatar {
-        background-color: #EFEFEF;
+        background-color: #efefef;
         border-radius: 50%;
         height: 34px;
         width: 34px;
@@ -82,7 +82,7 @@
 }
 
 .chat_detail__message_input {
-    border-top: 1px solid #EAEAEA;
+    border-top: 1px solid #eaeaea;
     display: grid;
     display: flex;
     gap: 10px;
@@ -91,7 +91,6 @@
     margin-top: 42px;
     padding-top: 12px;
     width: calc(100% - 100px);
-
 
     input {
         padding: 10px 20px;

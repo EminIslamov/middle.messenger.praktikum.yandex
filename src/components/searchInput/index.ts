@@ -1,3 +1,3 @@
-import './styles.scss';
+import "./styles.scss";
 
-export { default as SearchInput } from './searchInput';
+export { default as SearchInput } from "./searchInput";

@@ -9,75 +9,74 @@ import { validateMessage } from "../../utils/validate";
 import { Button } from "../../components/ui/button";
 
 export default class ChatsPage extends Block {
-    constructor() {
-        super("div", {
-            isChatChosen: true,
+  constructor() {
+    super("div", {
+      isChatChosen: true,
+      formState: {
+        message: "",
+      },
+
+      errors: {
+        message: "",
+      },
+
+      ContactsList: new ContactsList(),
+      SearchInput: new SearchInput(),
+      MessagesList: new MessagesList(),
+
+      MessageInput: new Input({
+        name: "message",
+        colorTheme: "light-theme",
+        onBlur: () => {
+          const value = this.props.formState?.message as string;
+          if (value !== undefined) {
+            const error = validateMessage(value);
+            if (error) {
+              (this.children.MessageInput as Block).setProps({ error });
+            }
+          }
+        },
+        onChange: (e: Event) => {
+          (this.children.MessageInput as Block).setProps({
+            error: "",
+          });
+
+          const target = e.target as HTMLInputElement;
+          const value = target.value;
+
+          this.setProps({
             formState: {
-              message: "",
-          },
-
-            errors: {
-              message: "",
-          },
-
-            ContactsList: new ContactsList(),
-            SearchInput: new SearchInput(),
-            MessagesList: new MessagesList(),
-
-            MessageInput: new Input({
-              name: "message",
-              colorTheme: "light-theme",
-              onBlur: () => {
-                const value = this.props.formState?.message as string;
-                if (value !== undefined) {
-                    const error = validateMessage(value);
-                    if (error) {
-                        (this.children.MessageInput as Block).setProps({ error });
-                    }
-                }
+              ...this.props.formState,
+              message: value,
             },
-              onChange: (e: Event) => {
-                  (this.children.MessageInput as Block).setProps({
-                      error: "",
-                  });
+          });
+        },
+      }),
 
-                  const target = e.target as HTMLInputElement;
-                  const value = target.value;
+      SendButton: new Button({
+        label: "Отправить",
+        type: "primary",
+        colorTheme: "light-theme",
+        onClick: (e: Event) => {
+          e.preventDefault();
 
-                  this.setProps({
-                      formState: {
-                          ...this.props.formState,
-                          message: value,
-                      },
-                  });
-              },
-            }),
+          const value = this.props.formState?.message as string;
+          if (value !== undefined) {
+            const error = validateMessage(value);
+            if (error) {
+              (this.children.MessageInput as Block).setProps({ error });
+            } else {
+              (this.children.MessageInput as Block).setProps({ error: "" });
+              console.log(this.props.formState);
+            }
+          }
+        },
+      }),
+    });
+  }
 
-            SendButton: new Button({
-              label: "Отправить",
-              type: "primary",
-              colorTheme: "light-theme",
-              onClick: (e: Event) => {
-                e.preventDefault();
-
-                 const value = this.props.formState?.message as string;
-                 if (value !== undefined) {
-                    const error = validateMessage(value);
-                    if (error) {
-                        (this.children.MessageInput as Block).setProps({ error });
-                    } else {
-                        (this.children.MessageInput as Block).setProps({ error: "" });
-                        console.log(this.props.formState);
-                    }
-                 }
-               
-              },
-            }),
-        });
-    }
-
-    public render(): string {
-        return `
+  public render(): string {
+    return `
             <div class="chats">
                 <div class="chats__contacts">
                     <div class="contacts__header">
@@ -141,5 +140,5 @@ export default class ChatsPage extends Block {
                 </div>
             </div>  
         `;
-    }
+  }
 }
