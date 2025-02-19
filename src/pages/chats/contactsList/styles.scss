@@ -1,0 +1,57 @@
+.contacts_list {
+    padding: 0;
+}
+
+.contact_card {
+    border-bottom: 1px solid #eaeaea;
+    border-top: 1px solid #eaeaea;
+    display: flex;
+    padding: 12px 10px;
+
+    &__avatar {
+        background-color: #efefef;
+        border-radius: 50%;
+        height: 47px;
+        margin-right: 10px;
+        width: 47px;
+    }
+
+    &__info {
+        .contact_card__name {
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .contact_card__last_message {
+            font-size: 12px;
+        }
+    }
+
+    &__right {
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        margin-left: auto;
+
+        .contact_card__time {
+            font-size: 9px;
+        }
+
+        .contact_card___unread_messages {
+            margin-top: 14px;
+        }
+    }
+}
+
+.unread_messages_count {
+    align-items: center;
+    background-color: #3369f3;
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    font-size: 11px;
+    height: 20px;
+    justify-content: center;
+    width: 20px;
+}

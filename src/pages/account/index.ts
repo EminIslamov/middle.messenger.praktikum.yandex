@@ -1,3 +1,3 @@
-import './styles.scss';
+import "./styles.scss";
 
-export { default as AccountPage } from './account.hbs?raw'
+export { default as AccountPage } from "./account";
