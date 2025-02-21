@@ -9,6 +9,8 @@ import {
   validateSecondName,
 } from "../../utils/validate.ts";
 
+import DefaultAvatar from "../../icons/default-avatar.png";
+
 export default class AccountPage extends Block {
   constructor() {
     super("div", {
@@ -339,12 +341,14 @@ export default class AccountPage extends Block {
     return `
        <div class="account">
 
-        <div class="account__avatar"></div>
+        <div class="account__avatar">
+          <img src="${DefaultAvatar}" alt="avatar"/>
+        </div>
 
         {{#if isEditing}}
                 {{{ InputAvatar }}}
         {{/if}}
-        
+
         <form>
             <div class="account__data">
                 {{#if isEditing}}
@@ -361,7 +365,7 @@ export default class AccountPage extends Block {
                         </div>
                     </div>
                 {{/if}}
-                
+
                  {{#if isEditing}}
                     <div class="account__row--editing">
                         {{{ InputLogin }}}
@@ -376,7 +380,7 @@ export default class AccountPage extends Block {
                         </div>
                     </div>
                 {{/if}}
-                
+
                 {{#if isEditing}}
                     <div class="account__row--editing">
                         {{{ InputFirsName }}}
@@ -441,7 +445,7 @@ export default class AccountPage extends Block {
                     <div class="account__row--editing">
                         {{{ InputOldPassword }}}
                     </div><div class="account__row--editing">
-                        {{{  InputNewPassword }}} 
+                        {{{  InputNewPassword }}}
                     </div>
                 {{else}}
                     <div class="account__row">
@@ -452,7 +456,7 @@ export default class AccountPage extends Block {
                     </div>
                 {{/if}}
             </div>
-            
+
             <div class="account__buttons">
 
                 {{#if isEditing}}
@@ -463,7 +467,7 @@ export default class AccountPage extends Block {
 
                 {{{ ExitButton }}}
             </div>
-        </div>    
+        </div>
         </form>
     </div>
     `;
