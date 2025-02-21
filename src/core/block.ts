@@ -18,7 +18,7 @@ abstract class Block<Props extends PropsBlock = PropsBlock> {
     FLOW_CDM: "flow:component-did-mount",
     FLOW_CDU: "flow:component-did-update",
     FLOW_RENDER: "flow:render",
-  };
+  } as const;
 
   private _element: HTMLElement | null = null;
   private _meta: { tagName: string; props: Props } | null = null;

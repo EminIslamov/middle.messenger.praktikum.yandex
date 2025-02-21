@@ -18,66 +18,30 @@ function queryStringify(
   }, "?");
 }
 
+type Options = {
+  headers?: Record<string, string>;
+  timeout?: number;
+  data?: Record<string, string | number | boolean>;
+}
+
+type HTTPMethod<R = XMLHttpRequest> = (url: string, options?: Options) => Promise<R>;
+
 export class HTTPTransport {
-  get = (
-    url: string,
-    options: {
-      headers?: Record<string, string>;
-      timeout?: number;
-      data?: Record<string, string | number | boolean>;
-    } = {},
-  ): Promise<XMLHttpRequest> => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.GET },
-      options.timeout,
-    );
-  };
+  get: HTTPMethod = (url, options: Options = {}) => (
+    this.request(url, {...options, method: METHODS.GET}, options.timeout) as Promise<XMLHttpRequest>
+  )
 
-  post = (
-    url: string,
-    options: {
-      headers?: Record<string, string>;
-      timeout?: number;
-      data?: Record<string, string | number | boolean>;
-    } = {},
-  ): Promise<XMLHttpRequest> => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.POST },
-      options.timeout,
-    );
-  };
+  put: HTTPMethod = (url, options: Options = {}) => (
+    this.request(url, {...options, method: METHODS.PUT}, options.timeout) as Promise<XMLHttpRequest>
+  )
 
-  put = (
-    url: string,
-    options: {
-      headers?: Record<string, string>;
-      timeout?: number;
-      data?: Record<string, string | number | boolean>;
-    } = {},
-  ): Promise<XMLHttpRequest> => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.PUT },
-      options.timeout,
-    );
-  };
+  post: HTTPMethod = (url, options: Options = {}) => (
+    this.request(url, {...options, method: METHODS.POST}, options.timeout) as Promise<XMLHttpRequest>
+  )
 
-  delete = (
-    url: string,
-    options: {
-      headers?: Record<string, string>;
-      timeout?: number;
-      data?: Record<string, string | number | boolean>;
-    } = {},
-  ): Promise<XMLHttpRequest> => {
-    return this.request(
-      url,
-      { ...options, method: METHODS.DELETE },
-      options.timeout,
-    );
-  };
+  delete: HTTPMethod = (url, options: Options = {}) => (
+    this.request(url, {...options, method: METHODS.DELETE}, options.timeout) as Promise<XMLHttpRequest>
+  )
 
   request = (
     url: string,
@@ -87,7 +51,7 @@ export class HTTPTransport {
       data?: Record<string, string | number | boolean>;
     } = {},
     timeout: number = 5000,
-  ): Promise<XMLHttpRequest> => {
+  ) => {
     const { headers = {}, method, data } = options;
 
     return new Promise(function (resolve, reject) {
