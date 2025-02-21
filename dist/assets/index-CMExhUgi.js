@@ -231,7 +231,7 @@ Expecting `+I.join(", ")+", got '"+(this.terminals_[P]||P)+"'":W="Parse error on
                 {{#each contacts}}
                     <div class="contact_card">
                         <div class="contact_card__avatar">
-                            <img src=""  />
+                            <img src="" alt="avatar"/>
                         </div>
 
                         <div class="contact_card__info">
@@ -286,13 +286,13 @@ Expecting `+I.join(", ")+", got '"+(this.terminals_[P]||P)+"'":W="Parse error on
                         {{{ ContactsList }}}
                     </div>
                 </div>
-                
+
                 <div class="chat_detail">
                   {{#if isChatChosen}}
                     <div class="chat_detail__header">
                       <div class="chat_detail__contact_info contact_info">
                         <div class="contact_info__avatar">
-                          <img src=""  />
+                          <img src="" alt="avatar"/>
                         </div>
 
                         <div class="contact_info__name">
@@ -302,7 +302,7 @@ Expecting `+I.join(", ")+", got '"+(this.terminals_[P]||P)+"'":W="Parse error on
 
                       <div class="chat_detail__chat_actions">
                         <div class="chat_detail__chat_actions__button">
-                          <img src="${jn}" />
+                          <img src="${jn}" "menu_icon"/>
                         </div>
                       </div>
                     </div>
@@ -313,7 +313,7 @@ Expecting `+I.join(", ")+", got '"+(this.terminals_[P]||P)+"'":W="Parse error on
 
                     <div class="chat_detail__message_input">
                       <div class="message_input__pin_icon">
-                        <img src="${$n}" />
+                        <img src="${$n}" alt="pin_icon"/>
                       </div>
 
                       {{{ MessageInput }}}
@@ -322,12 +322,12 @@ Expecting `+I.join(", ")+", got '"+(this.terminals_[P]||P)+"'":W="Parse error on
                         {{{ SendButton }}}
                       </div>
                     </div>
-                  
+
                   {{else}}
                     <div class="chat_detail__chose_chat">
                         Выберите чат, чтобы отправить сообщение
                     </div>
                   {{/if}}
                 </div>
-            </div>  
+            </div>
         `}}function ri(t){const e=document.querySelector("#app");e?(e.innerHTML="",e.appendChild(t.getContent())):console.error("Root element not found")}const ni={login:[Gn],account:[Kn],nav:[zn],signUp:[Wn],chats:[ti],error404:[Zn]};Object.entries(Un).forEach(([t,e])=>{typeof e!="function"&&ne.registerPartial(t,e)});function At(t){const[e,r]=ni[t];if(typeof e=="function"){ri(new e({}));return}const o=document.getElementById("app");if(o){const h=ne.compile(e);o.innerHTML=h(r)}else console.error("Container element not found")}document.addEventListener("DOMContentLoaded",()=>At("nav"));document.addEventListener("click",t=>{const r=t.target.getAttribute("page");r&&(At(r),t.preventDefault(),t.stopImmediatePropagation())});
