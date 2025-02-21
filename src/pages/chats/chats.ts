@@ -3,6 +3,7 @@ import { ContactsList } from "./contactsList";
 import { SearchInput } from "../../components/searchInput";
 import ActionMenuIcon from "../../icons/action-menu.svg";
 import PinIcon from "../../icons/pin-icon.svg";
+import DefaultAvatar from "../../icons/default-avatar.png";
 import { MessagesList } from "./messagesList";
 import { Input } from "../../components/ui/input";
 import { validateMessage } from "../../utils/validate";
@@ -101,7 +102,7 @@ export default class ChatsPage extends Block {
                     <div class="chat_detail__header">
                       <div class="chat_detail__contact_info contact_info">
                         <div class="contact_info__avatar">
-                          <img src="" alt="avatar"/>
+                          <img src="${DefaultAvatar}" alt="avatar"/>
                         </div>
 
                         <div class="contact_info__name">

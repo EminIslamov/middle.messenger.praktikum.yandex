@@ -1,5 +1,6 @@
 import Block from "../../../core/block";
 import Handlebars from "handlebars";
+import DefaultAvatar from "../../../icons/default-avatar.png";
 
 export default class ContactsList extends Block {
   constructor() {
@@ -50,7 +51,7 @@ export default class ContactsList extends Block {
                 {{#each contacts}}
                     <div class="contact_card">
                         <div class="contact_card__avatar">
-                            <img src="" alt="avatar"/>
+                            <img src="${DefaultAvatar}" alt="avatar"/>
                         </div>
 
                         <div class="contact_card__info">

@@ -9,10 +9,6 @@ export default [
   {
     rules: {
       "eol-last": ["error", "always"],
-      "prettier/prettier": "error",
     },
-  },
-  {
-    extends: [prettier],
   },
 ];
