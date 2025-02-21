@@ -95,13 +95,13 @@ export default class ChatsPage extends Block {
                         {{{ ContactsList }}}
                     </div>
                 </div>
-                
+
                 <div class="chat_detail">
                   {{#if isChatChosen}}
                     <div class="chat_detail__header">
                       <div class="chat_detail__contact_info contact_info">
                         <div class="contact_info__avatar">
-                          <img src=""  />
+                          <img src="" alt="avatar"/>
                         </div>
 
                         <div class="contact_info__name">
@@ -111,7 +111,7 @@ export default class ChatsPage extends Block {
 
                       <div class="chat_detail__chat_actions">
                         <div class="chat_detail__chat_actions__button">
-                          <img src="${ActionMenuIcon}" />
+                          <img src="${ActionMenuIcon}" "menu_icon"/>
                         </div>
                       </div>
                     </div>
@@ -122,7 +122,7 @@ export default class ChatsPage extends Block {
 
                     <div class="chat_detail__message_input">
                       <div class="message_input__pin_icon">
-                        <img src="${PinIcon}" />
+                        <img src="${PinIcon}" alt="pin_icon"/>
                       </div>
 
                       {{{ MessageInput }}}
@@ -131,14 +131,14 @@ export default class ChatsPage extends Block {
                         {{{ SendButton }}}
                       </div>
                     </div>
-                  
+
                   {{else}}
                     <div class="chat_detail__chose_chat">
                         Выберите чат, чтобы отправить сообщение
                     </div>
                   {{/if}}
                 </div>
-            </div>  
+            </div>
         `;
   }
 }

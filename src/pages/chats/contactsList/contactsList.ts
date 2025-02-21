@@ -50,7 +50,7 @@ export default class ContactsList extends Block {
                 {{#each contacts}}
                     <div class="contact_card">
                         <div class="contact_card__avatar">
-                            <img src=""  />
+                            <img src="" alt="avatar"/>
                         </div>
 
                         <div class="contact_card__info">
