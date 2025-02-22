@@ -1,0 +1,21 @@
+.search_input {
+    height: 32px;
+    position: relative;
+    width: 100%;
+
+    &__icon {
+        left: calc(39% - 12px);
+        position: absolute;
+        top: 52%;
+        transform: translateY(-50%);
+    }
+
+    &__input {
+        background-color: #efefef;
+        border: none;
+        border-radius: 5px;
+        height: 100%;
+        text-align: center;
+        width: 100%;
+    }
+}
