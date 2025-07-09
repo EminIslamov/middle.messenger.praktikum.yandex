@@ -21,14 +21,24 @@
     }
 
     &__info {
+        flex: 1;
+        min-width: 0;
+        margin-right: 10px;
+
         .contact_card__name {
             font-size: 13px;
             font-weight: 500;
             margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .contact_card__last_message {
             font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
     }
 
@@ -36,10 +46,13 @@
         align-items: center;
         display: flex;
         flex-direction: column;
-        margin-left: auto;
+        min-width: 50px;
+        flex-shrink: 0;
 
         .contact_card__time {
             font-size: 9px;
+            text-align: center;
+            width: 100%;
         }
 
         .contact_card___unread_messages {
@@ -58,4 +71,5 @@
     height: 20px;
     justify-content: center;
     width: 20px;
+    flex-shrink: 0;
 }
