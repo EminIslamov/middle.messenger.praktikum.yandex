@@ -19,8 +19,8 @@ export function isEqual(a: object, b: object): boolean {
       return false;
     }
 
-    const valA = (a as any)[key];
-    const valB = (b as any)[key];
+    const valA = (a as Record<string, unknown>)[key];
+    const valB = (b as Record<string, unknown>)[key];
 
     const bothAreObjects =
       typeof valA === 'object' && valA !== null &&
