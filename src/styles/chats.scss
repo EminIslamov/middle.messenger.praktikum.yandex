@@ -1,0 +1,27 @@
+.chat_detail {
+  &__chat_actions {
+    position: relative;
+
+    button {
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #F5F5F5;
+      }
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .action-menu {
+      top: calc(100% + 5px);
+    }
+  }
+}

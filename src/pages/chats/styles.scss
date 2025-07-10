@@ -13,7 +13,8 @@
     font-weight: 400;
     text-align: right;
 
-    a {
+    button {
+        background-color: transparent;
         color: #999;
         text-decoration: none;
     }
@@ -79,9 +80,9 @@
 }
 
 .chat_detail__messages_list {
-    grid-row: 2; // Устанавливаем этот элемент во вторую строку
-    max-height: 630px; // Установите максимальную высоту для списка сообщений
-    overflow-y: auto; // Добавлено для вертикальной прокрутки
+    grid-row: 2;
+    max-height: 630px;
+    overflow-y: auto;
     padding: 20px;
 }
 
@@ -90,7 +91,7 @@
     display: grid;
     display: flex;
     gap: 10px;
-    grid-row: 3; // Устанавливаем этот элемент в третью строку
+    grid-row: 3;
     margin-left: 20px;
     margin-top: 42px;
     padding-top: 12px;
@@ -100,4 +101,10 @@
         padding: 10px 20px;
         width: 100%;
     }
+}
+
+.contacts__profile_link {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 16px;
 }

@@ -1,23 +1,15 @@
 import { Button, Input } from "../../components";
 import Block from "../../core/block";
 import { validateLogin, validatePassword } from "../../utils/validate.ts";
+import { Router } from "../../core/router.ts";
+import { AuthController } from "../../controllers/AuthController.ts";
 
-interface LoginPageProps {
-  className?: string;
-  formState: {
-    login: string;
-    password: string;
-  };
-  errors: {
-    login: string;
-    password: string;
-  };
-}
+const router = new Router("#app");
 
 export default class LoginPage extends Block {
-  constructor(props: LoginPageProps) {
+  constructor() {
     super("div", {
-      ...props,
+      // ...props,
       className: "container",
       formState: {
         login: "",
@@ -104,7 +96,8 @@ export default class LoginPage extends Block {
             }
           });
           if (isValid) {
-            console.log(this.props.formState);
+            AuthController.login(this.props.formState as {login: string, password: string}, router);
+
           }
         },
       }),
@@ -113,6 +106,10 @@ export default class LoginPage extends Block {
         type: "link",
         page: "signup",
         colorTheme: "dark-theme",
+        onClick: (e: Event) => {
+          e.preventDefault();
+          router.go("/sign-up");
+        },
       }),
     });
   }
