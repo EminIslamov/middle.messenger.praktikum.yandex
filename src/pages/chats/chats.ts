@@ -122,6 +122,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
                     chatTitle: "",
                   },
                 });
+                await this.fetchChats();
               } catch (error) {
                 console.error("Failed to create chat", error);
               }
@@ -143,7 +144,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
       MessageInput: new Input({
         name: "message",
         colorTheme: "light-theme",
-        value: "",  // Add this line to initialize with empty value
+        value: "",
         onBlur: () => {
           const value = this.props.formState?.message as string;
           if (value !== undefined) {
@@ -156,7 +157,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
         onChange: (e: Event) => {
           (this.children.MessageInput as Block).setProps({
             error: "",
-            value: (e.target as HTMLInputElement).value,  // Add this line to update value prop
+            value: (e.target as HTMLInputElement).value,
           });
 
           const target = e.target as HTMLInputElement;
@@ -168,32 +169,6 @@ export default class ChatsPage extends Block<ChatsPageProps> {
               message: value,
             },
           });
-        },
-        onKeyDown: (e: Event) => {
-          const event = e as KeyboardEvent;
-          if (event.key === "Enter") {
-            event.preventDefault();
-            const input = event.target as HTMLInputElement;
-            const value = input.value;
-            const error = validateMessage(value);
-            if (error) {
-              (this.children.MessageInput as Block).setProps({ error });
-            } else {
-              (this.children.MessageInput as Block).setProps({ error: "" });
-              try {
-                this.messagesController?.sendMessage(value);
-                input.value = ""; // Явно очищаем значение в DOM
-                this.setProps({
-                  formState: {
-                    ...this.props.formState,
-                    message: "",
-                  },
-                });
-              } catch (error) {
-                console.error('Failed to send message:', error);
-              }
-            }
-          }
         },
       }),
 
