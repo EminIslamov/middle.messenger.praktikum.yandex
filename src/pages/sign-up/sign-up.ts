@@ -8,6 +8,10 @@ import {
   validatePhone,
   validateSecondName,
 } from "../../utils/validate.ts";
+import { Router } from "../../core/router.ts";
+import { AuthController } from "../../controllers/AuthController.ts";
+
+const router = new Router("#app");
 
 export default class SignUpPage extends Block {
   constructor() {
@@ -248,8 +252,8 @@ export default class SignUpPage extends Block {
             }
           });
 
-          if (isValid) {
-            console.log(this.props.formState);
+          if (isValid && this.props.formState) {
+            AuthController.signup(this.props.formState, router);
           }
         },
       }),
@@ -258,6 +262,10 @@ export default class SignUpPage extends Block {
         type: "link",
         page: "login",
         colorTheme: "dark-theme",
+        onClick: (e: Event) => {
+          e.preventDefault();
+          router.go("/");
+        },
       }),
     });
   }
@@ -273,9 +281,9 @@ export default class SignUpPage extends Block {
                 {{{ InputPassword }}}
                 {{{ InputPhone}}}
             </div>
-    
+
             <div class="btns-wrapper">
-    
+
                 {{{ SignUpButton }}}
                 {{{ ExitButton }}}
             </div>

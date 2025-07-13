@@ -22,7 +22,7 @@ export default class Button extends Block {
   }
   public render(): string {
     return `
-          {{ label }}
+          {{{ label }}}
     `;
   }
 }

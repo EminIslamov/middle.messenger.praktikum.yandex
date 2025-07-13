@@ -2,14 +2,13 @@ import EventBus from "./eventBus";
 import { nanoid } from "nanoid";
 import Handlebars from "handlebars";
 
-// Abstract class that should not be instantiated directly
 export interface PropsBlock {
-  id?: string; // Уникальный идентификатор компонента
-  className?: string; // CSS классы
-  attrs?: Record<string, string>; // Атрибуты HTML
-  events?: Record<string, EventListener>; // События
-  formState?: Record<string, string>; // Состояние формы
-  [key: string]: unknown; // Добавьте индексную сигнатуру
+  id?: string;
+  className?: string;
+  attrs?: Record<string, string>;
+  events?: Record<string, EventListener>;
+  formState?: Record<string, string>;
+  [key: string]: unknown;
 }
 
 abstract class Block<Props extends PropsBlock = PropsBlock> {
@@ -101,9 +100,8 @@ abstract class Block<Props extends PropsBlock = PropsBlock> {
   private _componentDidMount() {
     this.componentDidMount();
   }
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected componentDidMount(_oldProps?: Props) {
-    // eslint-disable-line @typescript-eslint/no-unused-vars
     return true;
   }
 
@@ -119,12 +117,13 @@ abstract class Block<Props extends PropsBlock = PropsBlock> {
     this._render();
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   protected componentDidUpdate(_oldProps: Props, _newProps: Props) {
     // eslint-disable-line @typescript-eslint/no-unused-vars
     return true;
   }
 
-  setProps = (nextProps: Partial<Props>) => {
+  setProps = (nextProps: Partial<PropsBlock>) => {
     if (!nextProps) {
       return;
     }

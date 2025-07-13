@@ -1,17 +1,25 @@
 import Handlebars from "handlebars";
+import { Router } from "./core/router";
+import { ChatsPage } from "./pages/chats";
+import { LoginPage } from "./pages/login";
+// import { LoginPageProps } from "./pages/login/login";
+import { AccountPage } from "./pages/account";
+import { SignUpPage } from "./pages/sign-up";
+import { Error404Page } from "./pages/error404";
+
 import * as Components from "./components";
-import * as Pages from "./pages";
 
-import renderDOM from "./core/renderDom";
+const router = new Router("#app");
 
-const pages = {
-  login: [Pages.LoginPage],
-  account: [Pages.AccountPage],
-  nav: [Pages.NavigatePage],
-  signUp: [Pages.SignUpPage],
-  chats: [Pages.ChatsPage],
-  error404: [Pages.Error404Page],
-};
+
+router.use("/", LoginPage, { isPublicOnly: true });
+router.use("/sign-up", SignUpPage, { isPublicOnly: true });
+router.use("/messenger", ChatsPage, { isPrivate: true });
+router.use("/messenger/:id", ChatsPage, { isPrivate: true });
+router.use("/settings", AccountPage, { isPrivate: true });
+router.use("/404", Error404Page);
+
+router.start();
 
 Object.entries(Components).forEach(([name, template]) => {
   if (typeof template === "function") {
@@ -20,33 +28,3 @@ Object.entries(Components).forEach(([name, template]) => {
   Handlebars.registerPartial(name, template);
 });
 
-function navigate(page: string) {
-  //@ts-expect-error: Времененная мера для текущей навигации
-  const [source, context] = pages[page];
-  if (typeof source === "function") {
-    renderDOM(new source({}));
-    return;
-  }
-
-  const container = document.getElementById("app");
-
-  if (container) {
-    const temlpatingFunction = Handlebars.compile(source);
-    container.innerHTML = temlpatingFunction(context);
-  } else {
-    console.error("Container element not found");
-  }
-}
-
-document.addEventListener("DOMContentLoaded", () => navigate("nav"));
-
-document.addEventListener("click", (e) => {
-  const target = e.target as HTMLElement;
-  const page = target.getAttribute("page");
-  if (page) {
-    navigate(page);
-
-    e.preventDefault();
-    e.stopImmediatePropagation();
-  }
-});

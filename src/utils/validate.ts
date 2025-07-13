@@ -25,7 +25,7 @@ export const validateEmail = (email: string): string | null => {
 };
 
 export const validatePassword = (password: string): string | null => {
-  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>\/?])?[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>\/?]{8,40}$/;
+  const regex = /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+[\]{};':"\\|,.<>/?])?[A-Za-z\d!@#$%^&*()_+[\]{};':"\\|,.<>/?]{8,40}$/;
   return regex.test(password)
     ? null
     : "Пароль должен содержать от 8 до 40 символов, хотя бы одну заглавную букву и одну цифру.";

@@ -1,6 +1,6 @@
-import Block from "./block";
+import Block, { PropsBlock } from "./block";
 
-export default function renderDOM(block: Block) {
+export default function renderDOM<P extends PropsBlock>(block: Block<P>) {
   const root = document.querySelector("#app");
 
   if (root) {
@@ -11,7 +11,7 @@ export default function renderDOM(block: Block) {
   }
 }
 
-export function render(query: string, block: Block) {
+export function render<P extends PropsBlock>(query: string, block: Block<P>) {
   const root = document.querySelector(query);
 
   if (root) {
