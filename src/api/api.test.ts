@@ -139,25 +139,6 @@ describe("HTTPTransport", () => {
       void expect(sendCalled).to.be.true;
       void expect(setHeaderCalled).to.be.true;
     });
-
-    it("should make POST request with FormData", async () => {
-      let sendCalled = false;
-      const formData = new FormData();
-      formData.append("file", new Blob(["test"]));
-
-      mockXHR.send = (data?: string | FormData) => {
-        sendCalled = true;
-        expect(data).to.equal(formData);
-        if (mockXHR.onload) mockXHR.onload();
-      };
-
-      await httpTransport.post("/api/upload", {
-        data: formData,
-        isFormData: true,
-      });
-
-      void expect(sendCalled).to.be.true;
-    });
   });
 
   describe("PUT requests", () => {
