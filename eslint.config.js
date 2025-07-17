@@ -5,7 +5,16 @@ import prettier from "eslint-config-prettier";
 export default [
   eslint.configs.recommended,
   ...tseslint.configs.strict,
-  { ignores: ["**/*.js"] },
+  {
+    ignores: [
+      "**/*.js",
+      "node_modules/**",
+      "dist/**",
+      "public/**",
+      "*.config.js",
+      "*.config.ts"
+    ]
+  },
   {
     rules: {
       "eol-last": ["error", "always"],
