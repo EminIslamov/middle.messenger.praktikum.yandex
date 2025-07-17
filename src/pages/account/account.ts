@@ -41,10 +41,12 @@ interface AccountPageProps {
 }
 
 class PasswordModalContent extends Block {
-  constructor(props: { children: { InputOldPassword: Block; InputNewPassword: Block } }) {
+  constructor(props: {
+    children: { InputOldPassword: Block; InputNewPassword: Block };
+  }) {
     super("div", {
       className: "modal__form",
-      ...props.children
+      ...props.children,
     });
   }
 
@@ -126,7 +128,7 @@ export default class AccountPage extends Block<AccountPageProps> {
       children: {
         InputOldPassword: inputOldPassword,
         InputNewPassword: inputNewPassword,
-      }
+      },
     });
 
     super("div", {
@@ -147,6 +149,12 @@ export default class AccountPage extends Block<AccountPageProps> {
         oldPassword: "",
         newPassword: "",
       },
+      events: {
+        submit: (e: Event) => {
+          e.preventDefault();
+          this.handleSubmit();
+        },
+      },
       InputAvatar: new InputField({
         name: "avatar",
         htmlType: "file",
@@ -155,7 +163,7 @@ export default class AccountPage extends Block<AccountPageProps> {
           if (target.files && target.files[0]) {
             try {
               const result = await AuthController.updateAvatar(target.files[0]);
-              console.log('Avatar update response:', result);
+              console.log("Avatar update response:", result);
 
               // Обновляем URL аватара после успешной загрузки
               const avatarUrl = result.avatar
@@ -345,81 +353,11 @@ export default class AccountPage extends Block<AccountPageProps> {
       SaveButton: new Button({
         label: "Сохранить",
         type: "primary",
+        htmlType: "submit",
         colorTheme: "light-theme",
         onClick: async (e: Event) => {
           e.preventDefault();
-          const validators = [
-            { field: "email", validate: validateEmail, input: "InputEmail" },
-            { field: "login", validate: validateLogin, input: "InputLogin" },
-            {
-              field: "first_name",
-              validate: validateFirstName,
-              input: "InputFirsName",
-            },
-            {
-              field: "second_name",
-              validate: validateSecondName,
-              input: "InputSecondName",
-            },
-            { field: "phone", validate: validatePhone, input: "InputPhone" },
-            {
-              field: "oldPassword",
-              validate: validatePassword,
-              input: "InputOldPassword",
-            },
-            {
-              field: "newPassword",
-              validate: validatePassword,
-              input: "InputNewPassword",
-            },
-          ];
-
-          let isValid = true;
-
-          // Пробегаем по всем полям и валидаторам
-          validators.forEach(({ field, validate, input }) => {
-            const value = this.props.formState?.[field] as string;
-            if (value !== undefined) {
-              const error = validate(value);
-              if (error) {
-                (this.children[input] as Block).setProps({ error });
-                isValid = false;
-              } else {
-                (this.children[input] as Block).setProps({ error: "" });
-              }
-            }
-          });
-
-          if (isValid) {
-            try {
-              const formState = this.props.formState as {
-                email: string;
-                login: string;
-                first_name: string;
-                second_name: string;
-                display_name: string;
-                phone: string;
-                oldPassword: string;
-                newPassword: string;
-              };
-
-              const { oldPassword, newPassword, ...userData } = formState;
-              console.log('Updating user data:', userData);
-              await AuthController.updateUser(userData);
-
-              // Если есть старый и новый пароль, обновляем пароль
-              if (oldPassword && newPassword) {
-                console.log('Updating password');
-                await AuthController.changePassword({ oldPassword, newPassword });
-              }
-
-              // Обновляем данные на странице
-              await this.fetchUserData();
-              this.setProps({ isEditing: false });
-            } catch (error) {
-              console.error("Failed to update user data", error);
-            }
-          }
+          await this.handleSubmit();
         },
       }),
 
@@ -461,7 +399,7 @@ export default class AccountPage extends Block<AccountPageProps> {
         title: "Изменить пароль",
         content: modalContent,
         onClose: () => {
-          console.log('Modal closing');
+          console.log("Modal closing");
           this.setProps({ isPasswordChanging: false });
           (this.children.PasswordModal as Block).setProps({ isOpen: false });
         },
@@ -477,9 +415,14 @@ export default class AccountPage extends Block<AccountPageProps> {
             };
             if (oldPassword && newPassword) {
               try {
-                await AuthController.changePassword({ oldPassword, newPassword });
+                await AuthController.changePassword({
+                  oldPassword,
+                  newPassword,
+                });
                 this.setProps({ isPasswordChanging: false });
-                (this.children.PasswordModal as Block).setProps({ isOpen: false });
+                (this.children.PasswordModal as Block).setProps({
+                  isOpen: false,
+                });
                 this.setProps({
                   formState: {
                     ...this.props.formState,
@@ -491,7 +434,7 @@ export default class AccountPage extends Block<AccountPageProps> {
                 console.error("Failed to change password", error);
               }
             }
-          }
+          },
         }),
         CloseButton: new Button({
           label: "Закрыть",
@@ -501,8 +444,8 @@ export default class AccountPage extends Block<AccountPageProps> {
             e.preventDefault();
             this.setProps({ isPasswordChanging: false });
             (this.children.PasswordModal as Block).setProps({ isOpen: false });
-          }
-        })
+          },
+        }),
       }),
     });
 
@@ -510,10 +453,85 @@ export default class AccountPage extends Block<AccountPageProps> {
     this.fetchUserData();
   }
 
+  private async handleSubmit() {
+    const validators = [
+      { field: "email", validate: validateEmail, input: "InputEmail" },
+      { field: "login", validate: validateLogin, input: "InputLogin" },
+      {
+        field: "first_name",
+        validate: validateFirstName,
+        input: "InputFirsName",
+      },
+      {
+        field: "second_name",
+        validate: validateSecondName,
+        input: "InputSecondName",
+      },
+      { field: "phone", validate: validatePhone, input: "InputPhone" },
+      {
+        field: "oldPassword",
+        validate: validatePassword,
+        input: "InputOldPassword",
+      },
+      {
+        field: "newPassword",
+        validate: validatePassword,
+        input: "InputNewPassword",
+      },
+    ];
+
+    let isValid = true;
+
+    // Пробегаем по всем полям и валидаторам
+    validators.forEach(({ field, validate, input }) => {
+      const value = this.props.formState?.[field] as string;
+      if (value !== undefined) {
+        const error = validate(value);
+        if (error) {
+          (this.children[input] as Block).setProps({ error });
+          isValid = false;
+        } else {
+          (this.children[input] as Block).setProps({ error: "" });
+        }
+      }
+    });
+
+    if (isValid) {
+      try {
+        const formState = this.props.formState as {
+          email: string;
+          login: string;
+          first_name: string;
+          second_name: string;
+          display_name: string;
+          phone: string;
+          oldPassword: string;
+          newPassword: string;
+        };
+
+        const { oldPassword, newPassword, ...userData } = formState;
+        console.log("Updating user data:", userData);
+        await AuthController.updateUser(userData);
+
+        // Если есть старый и новый пароль, обновляем пароль
+        if (oldPassword && newPassword) {
+          console.log("Updating password");
+          await AuthController.changePassword({ oldPassword, newPassword });
+        }
+
+        // Обновляем данные на странице
+        await this.fetchUserData();
+        this.setProps({ isEditing: false });
+      } catch (error) {
+        console.error("Failed to update user data", error);
+      }
+    }
+  }
+
   async fetchUserData() {
     try {
       const userData = await AuthController.getUser();
-      console.log('User data:', userData);
+      console.log("User data:", userData);
 
       // Добавляем базовый URL к пути аватара, если он есть
       const avatarUrl = userData.avatar
@@ -549,7 +567,7 @@ export default class AccountPage extends Block<AccountPageProps> {
           {{{ InputAvatar }}}
         </div>
 
-        <form>
+        <form onsubmit="return false;">
           <div class="account__data">
             {{#if isEditing}}
               <div class="account__row--editing">
