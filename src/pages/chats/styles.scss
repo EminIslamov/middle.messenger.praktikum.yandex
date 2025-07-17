@@ -86,7 +86,7 @@
     padding: 20px;
 }
 
-.chat_detail__message_input {
+.chat_detail__message_form {
     border-top: 1px solid #eaeaea;
     display: grid;
     display: flex;
@@ -97,9 +97,14 @@
     padding-top: 12px;
     width: calc(100% - 100px);
 
+
+}
+
+.message_input__input_wrapper {
+    width: 100%;
+
     input {
         padding: 10px 20px;
-        width: 100%;
     }
 }
 

@@ -6,6 +6,7 @@ export interface ButtonProps {
   page?: string;
   onClick?: EventListener;
   label: string;
+  htmlType?: "button" | "submit" | "reset";
 }
 
 export default class Button extends Block {
@@ -15,6 +16,7 @@ export default class Button extends Block {
       className: `button button__${props.type} ${props.colorTheme}`,
       page: props.page,
       colorTheme: props.colorTheme,
+      type: props.htmlType || "button",
       events: {
         click: props.onClick || (() => {}),
       },

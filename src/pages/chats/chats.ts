@@ -77,7 +77,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
     const modalContent = new ChatCreateModalContent({
       children: {
         ChatTitleInput: chatTitleInput,
-      }
+      },
     });
 
     super("div", {
@@ -91,6 +91,12 @@ export default class ChatsPage extends Block<ChatsPageProps> {
       errors: {
         message: "",
       },
+      events: {
+        submit: async (e: Event) => {
+          e.preventDefault();
+          await this.handleMessageSubmit();
+        },
+      },
       ContactsList: new ContactsList(),
       SearchInput: new SearchInput(),
       MessagesList: new MessagesList(),
@@ -100,22 +106,27 @@ export default class ChatsPage extends Block<ChatsPageProps> {
         title: "Создание чата",
         content: modalContent,
         onClose: () => {
-          console.log('Modal closing');
+          console.log("Modal closing");
           this.setProps({ isPasswordChanging: false });
           (this.children.ChatCreateModal as Block).setProps({ isOpen: false });
         },
         SubmitButton: new Button({
           label: "Сохранить",
           type: "primary",
+          htmlType: "submit",
           colorTheme: "light-theme",
           onClick: async (e: Event) => {
             e.preventDefault();
-            const chatTitle = (chatTitleInput.element?.querySelector('input') as HTMLInputElement)?.value;
+            const chatTitle = (
+              chatTitleInput.element?.querySelector("input") as HTMLInputElement
+            )?.value;
             if (chatTitle) {
               try {
                 await ChatController.createChat(chatTitle);
                 this.setProps({ isChatCreating: false });
-                (this.children.ChatCreateModal as Block).setProps({ isOpen: false });
+                (this.children.ChatCreateModal as Block).setProps({
+                  isOpen: false,
+                });
                 this.setProps({
                   formState: {
                     ...this.props.formState,
@@ -127,7 +138,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
                 console.error("Failed to create chat", error);
               }
             }
-          }
+          },
         }),
         CloseButton: new Button({
           label: "Закрыть",
@@ -136,9 +147,11 @@ export default class ChatsPage extends Block<ChatsPageProps> {
           onClick: (e: Event) => {
             e.preventDefault();
             this.setProps({ isChatCreating: false });
-            (this.children.ChatCreateModal as Block).setProps({ isOpen: false });
-          }
-        })
+            (this.children.ChatCreateModal as Block).setProps({
+              isOpen: false,
+            });
+          },
+        }),
       }),
 
       MessageInput: new Input({
@@ -175,54 +188,32 @@ export default class ChatsPage extends Block<ChatsPageProps> {
       SendButton: new Button({
         label: "Отправить",
         type: "primary",
+        htmlType: "submit",
         colorTheme: "light-theme",
         onClick: async (e: Event) => {
           e.preventDefault();
-
-          const value = this.props.formState?.message as string;
-          if (value !== undefined) {
-            const error = validateMessage(value);
-            if (error) {
-              (this.children.MessageInput as Block).setProps({ error });
-            } else {
-              (this.children.MessageInput as Block).setProps({ error: "" });
-
-              // Отправляем сообщение через WebSocket
-              try {
-                this.messagesController?.sendMessage(value);
-                // Очищаем поле ввода после отправки
-                this.setProps({
-                  formState: {
-                    ...this.props.formState,
-                    message: "",
-                  },
-                });
-              } catch (error) {
-                console.error('Failed to send message:', error);
-              }
-            }
-          }
+          await this.handleMessageSubmit();
         },
       }),
       ProfileButton: new Button({
         label: "Профиль",
         type: "primary",
-        colorTheme: 'light',
+        colorTheme: "light",
         onClick: (e: Event) => {
           e.preventDefault();
-          router.go('/settings')
-        }
+          router.go("/settings");
+        },
       }),
 
       AddChatButton: new Button({
         label: "Новый чат",
         type: "primary",
-        colorTheme: 'light',
+        colorTheme: "light",
         onClick: (e: Event) => {
           e.preventDefault();
           this.setProps({ isChatCreating: true });
           (this.children.ChatCreateModal as Block).setProps({ isOpen: true });
-        }
+        },
       }),
 
       ActionButton: new Button({
@@ -233,7 +224,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
           e.stopPropagation();
           if (this.props.currentChat?.id) {
             this.setProps({
-              isActionMenuOpen: !this.props.isActionMenuOpen
+              isActionMenuOpen: !this.props.isActionMenuOpen,
             });
           }
         },
@@ -247,7 +238,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
         chatId: this.props.currentChat.id,
         onClose: () => {
           this.setProps({ isActionMenuOpen: false });
-        }
+        },
       });
 
       this.children.ActionMenu = new ActionMenu({
@@ -255,17 +246,46 @@ export default class ChatsPage extends Block<ChatsPageProps> {
         content: actionMenuContent,
         onClose: () => {
           this.setProps({ isActionMenuOpen: false });
-        }
+        },
       });
     }
 
     // Добавляем обработчик клика вне меню для его закрытия
-    document.addEventListener('click', (e: Event) => {
+    document.addEventListener("click", (e: Event) => {
       const target = e.target as HTMLElement;
-      if (!target.closest('.chat_detail__chat_actions') && this.props.isActionMenuOpen) {
+      if (
+        !target.closest(".chat_detail__chat_actions") &&
+        this.props.isActionMenuOpen
+      ) {
         this.setProps({ isActionMenuOpen: false });
       }
     });
+  }
+
+  private async handleMessageSubmit() {
+    const value = this.props.formState?.message as string;
+    if (value !== undefined) {
+      const error = validateMessage(value);
+      if (error) {
+        (this.children.MessageInput as Block).setProps({ error });
+      } else {
+        (this.children.MessageInput as Block).setProps({ error: "" });
+
+        // Отправляем сообщение через WebSocket
+        try {
+          this.messagesController?.sendMessage(value);
+          // Очищаем поле ввода после отправки
+          this.setProps({
+            formState: {
+              ...this.props.formState,
+              message: "",
+            },
+          });
+        } catch (error) {
+          console.error("Failed to send message:", error);
+        }
+      }
+    }
   }
 
   public componentDidMount() {
@@ -279,10 +299,13 @@ export default class ChatsPage extends Block<ChatsPageProps> {
     return true;
   }
 
-  protected componentDidUpdate(oldProps: ChatsPageProps, newProps: ChatsPageProps): boolean {
+  protected componentDidUpdate(
+    oldProps: ChatsPageProps,
+    newProps: ChatsPageProps,
+  ): boolean {
     if (oldProps.isActionMenuOpen !== newProps.isActionMenuOpen) {
       (this.children.ActionMenu as Block)?.setProps({
-        isOpen: newProps.isActionMenuOpen
+        isOpen: newProps.isActionMenuOpen,
       });
     }
 
@@ -293,7 +316,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
           chatId: newProps.currentChat.id,
           onClose: () => {
             this.setProps({ isActionMenuOpen: false });
-          }
+          },
         });
 
         if (!this.children.ActionMenu) {
@@ -302,11 +325,11 @@ export default class ChatsPage extends Block<ChatsPageProps> {
             content: actionMenuContent,
             onClose: () => {
               this.setProps({ isActionMenuOpen: false });
-            }
+            },
           });
         } else {
           (this.children.ActionMenu as Block).setProps({
-            content: actionMenuContent
+            content: actionMenuContent,
           });
         }
       }
@@ -314,7 +337,9 @@ export default class ChatsPage extends Block<ChatsPageProps> {
 
     // Синхронизируем value MessageInput с formState.message
     if (oldProps.formState?.message !== newProps.formState?.message) {
-      (this.children.MessageInput as Block).setProps({ value: newProps.formState?.message || "" });
+      (this.children.MessageInput as Block).setProps({
+        value: newProps.formState?.message || "",
+      });
     }
 
     return true;
@@ -327,7 +352,7 @@ export default class ChatsPage extends Block<ChatsPageProps> {
         (this.children.ContactsList as Block).setProps({ contacts: chats });
       }
     } catch (error) {
-      console.error('Ошибка при получении чатов:', error);
+      console.error("Ошибка при получении чатов:", error);
     }
   }
 
@@ -343,12 +368,12 @@ export default class ChatsPage extends Block<ChatsPageProps> {
       onMessagesReceived: (messages) => {
         (this.children.MessagesList as MessagesList).setMessages(messages);
         (this.children.MessagesList as MessagesList).setProps({
-          currentUserId: userId
+          currentUserId: userId,
         });
       },
       onNewMessage: (message) => {
         (this.children.MessagesList as MessagesList).addMessage(message);
-      }
+      },
     });
 
     await this.messagesController.connect(chatId);
@@ -362,22 +387,25 @@ export default class ChatsPage extends Block<ChatsPageProps> {
       if (chat) {
         this.setProps({
           currentChat: chat,
-          isChatChosen: true
+          isChatChosen: true,
         });
 
         // Получаем текущего пользователя и инициализируем WebSocket
-        const userResponse = await fetch('https://ya-praktikum.tech/api/v2/auth/user', {
-          credentials: 'include'
-        });
+        const userResponse = await fetch(
+          "https://ya-praktikum.tech/api/v2/auth/user",
+          {
+            credentials: "include",
+          },
+        );
         const userData = await userResponse.json();
 
         await this.initializeWebSocket(userData.id, chat.id);
       } else {
-        router.go('/messenger');
+        router.go("/messenger");
       }
     } catch (error) {
-      console.error('Ошибка при загрузке чата:', error);
-      router.go('/messenger');
+      console.error("Ошибка при загрузке чата:", error);
+      router.go("/messenger");
     }
   }
 
@@ -439,17 +467,19 @@ export default class ChatsPage extends Block<ChatsPageProps> {
               {{{ MessagesList }}}
             </div>
 
-            <div class="chat_detail__message_input">
-              <div class="message_input__pin_icon">
-                <img src="${PinIcon}" alt="pin_icon"/>
-              </div>
+              <form class="chat_detail__message_form" onsubmit="return false;">
+               <div class="message_input__pin_icon">
+                    <img src="${PinIcon}" alt="pin_icon"/>
+                  </div>
+                <div class="message_input__input_wrapper">
 
-              {{{ MessageInput }}}
+                  {{{ MessageInput }}}
+                </div>
 
-              <div class="message_input__send_button">
-                {{{ SendButton }}}
-              </div>
-            </div>
+                <div class="message_input__send_button">
+                  {{{ SendButton }}}
+                </div>
+              </form>
 
           {{else}}
             <div class="chat_detail__chose_chat">
