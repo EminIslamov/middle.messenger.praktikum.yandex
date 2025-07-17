@@ -47,11 +47,11 @@
     "vite-plugin-handlebars": "2.0.0"
   },
   "lint-staged": {
-    "*.{js,ts}": [
+    "src/**/*.{js,ts}": [
       "eslint --fix",
       "prettier --write"
     ],
-    "*.{scss,css}": [
+    "src/**/*.{scss,css}": [
       "stylelint --fix"
     ],
     "*.{json,md}": [
