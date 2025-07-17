@@ -1,7 +1,12 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
 
 npx lint-staged
+
+echo "🔍 Running full lint check..."
+npm run lint
+
+echo "🔍 Checking TypeScript types..."
+npx tsc --noEmit
 
 echo "🧪 Running tests..."
 npm test
