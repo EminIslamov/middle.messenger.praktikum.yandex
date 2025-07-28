@@ -1,7 +1,6 @@
-import Block, { PropsBlock } from "./block";
-import { render } from "./renderDom";
-import { AuthController } from "../controllers/AuthController"; // убедись, что он есть
-
+import Block, { PropsBlock } from "./block.js";
+import { render } from "./renderDom.js";
+import { AuthController } from "../controllers/AuthController.js";
 
 // Добавляем новый тип для параметров маршрута
 type RouteParams = Record<string, string>;
@@ -40,9 +39,17 @@ class Route<P extends PropsBlock = PropsBlock> {
   private _pathname: string;
   private _blockClass: new () => Block<P>;
   private _block: Block<P> | null = null;
-  private _props: { rootQuery: string; isPrivate?: boolean; isPublicOnly?: boolean };
+  private _props: {
+    rootQuery: string;
+    isPrivate?: boolean;
+    isPublicOnly?: boolean;
+  };
 
-  constructor(pathname: string, view: new () => Block<P>, props: { rootQuery: string; isPrivate?: boolean; isPublicOnly?: boolean }) {
+  constructor(
+    pathname: string,
+    view: new () => Block<P>,
+    props: { rootQuery: string; isPrivate?: boolean; isPublicOnly?: boolean },
+  ) {
     this._pathname = pathname;
     this._blockClass = view;
     this._props = props;
@@ -118,7 +125,11 @@ export class Router {
     Router.__instance = this;
   }
 
-  use<P extends PropsBlock>(pathname: string, block: new () => Block<P>, props: Partial<RouteProps> = {}) {
+  use<P extends PropsBlock>(
+    pathname: string,
+    block: new () => Block<P>,
+    props: Partial<RouteProps> = {},
+  ) {
     const route = new Route<P>(pathname, block, {
       rootQuery: this._rootQuery,
       ...props,
@@ -153,7 +164,7 @@ export class Router {
         return;
       }
     } catch (e) {
-      console.error(e)
+      console.error(e);
       if (route.isPrivate) {
         this.go("/");
         return;

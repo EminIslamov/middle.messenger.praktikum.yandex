@@ -1,5 +1,5 @@
-import { HTTPTransport } from "../api/api";
-import type { Router } from "../core/router"; // только тип
+import { HTTPTransport } from "../api/api.js";
+import type { Router } from "../core/router.js";
 
 const authAPI = new HTTPTransport();
 const BASE_URL = "https://ya-praktikum.tech/api/v2";
@@ -67,10 +67,13 @@ export const AuthController = {
 
   async updateUser(data: Record<string, string>) {
     try {
-      const response = await authAPI.put(`${BASE_URL.replace('/auth', '')}/user/profile`, {
-        headers: { "Content-Type": "application/json" },
-        data,
-      });
+      const response = await authAPI.put(
+        `${BASE_URL.replace("/auth", "")}/user/profile`,
+        {
+          headers: { "Content-Type": "application/json" },
+          data,
+        },
+      );
 
       if (response.status === 200) {
         return JSON.parse(response.responseText);
@@ -85,7 +88,7 @@ export const AuthController = {
 
   async updateAvatar(avatarFile: File) {
     const formData = new FormData();
-    console.log('avatarFile', avatarFile);
+    console.log("avatarFile", avatarFile);
     formData.append("avatar", avatarFile);
 
     try {

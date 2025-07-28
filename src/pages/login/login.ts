@@ -19,6 +19,12 @@ export default class LoginPage extends Block {
         login: "",
         password: "",
       },
+      events: {
+        submit: (e: Event) => {
+          e.preventDefault();
+          this.handleSubmit();
+        },
+      },
       InputLogin: new Input({
         label: "Введите логин",
         name: "login",
@@ -70,35 +76,12 @@ export default class LoginPage extends Block {
       SignInButton: new Button({
         label: "Войти",
         type: "primary",
+        htmlType: "submit",
         page: "signup",
         colorTheme: "light-theme",
         onClick: (e: Event) => {
           e.preventDefault();
-          const validators = [
-            { field: "login", validate: validateLogin, input: "InputLogin" },
-            {
-              field: "password",
-              validate: validatePassword,
-              input: "InputPassword",
-            },
-          ];
-          let isValid = true;
-          validators.forEach(({ field, validate, input }) => {
-            const value = this.props.formState?.[field] as string;
-            if (value !== undefined) {
-              const error = validate(value);
-              if (error) {
-                (this.children[input] as Block).setProps({ error });
-                isValid = false;
-              } else {
-                (this.children[input] as Block).setProps({ error: "" });
-              }
-            }
-          });
-          if (isValid) {
-            AuthController.login(this.props.formState as {login: string, password: string}, router);
-
-          }
+          this.handleSubmit();
         },
       }),
       SignUpButton: new Button({
@@ -114,9 +97,40 @@ export default class LoginPage extends Block {
     });
   }
 
+  private handleSubmit() {
+    const validators = [
+      { field: "login", validate: validateLogin, input: "InputLogin" },
+      {
+        field: "password",
+        validate: validatePassword,
+        input: "InputPassword",
+      },
+    ];
+    let isValid = true;
+    validators.forEach(({ field, validate, input }) => {
+      const value = this.props.formState?.[field] as string;
+      if (value !== undefined) {
+        const error = validate(value);
+        if (error) {
+          (this.children[input] as Block).setProps({ error });
+          isValid = false;
+        } else {
+          (this.children[input] as Block).setProps({ error: "" });
+        }
+      }
+    });
+    if (isValid) {
+      AuthController.login(
+        this.props.formState as { login: string; password: string },
+        router,
+      );
+    }
+  }
+
   public render(): string {
     return `
-      <form class="login-form">
+    <div>
+      <form class="login-form" onsubmit="return false;">
         <div class="inputs-wrapper">
           {{{ InputLogin }}}
           {{{ InputPassword }}}
@@ -126,7 +140,8 @@ export default class LoginPage extends Block {
           {{{ SignInButton }}}
           {{{ SignUpButton }}}
         </div>
-    </form>
+      </form>
+    </div>
     `;
   }
 }
